@@ -1,6 +1,9 @@
 package de.raidcraft.rccity;
 
 import co.aikar.commands.CommandIssuer;
+import de.raidcraft.rccity.entities.City;
+import de.raidcraft.rccity.entities.CityProgress;
+import de.raidcraft.rccity.entities.Resident;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -14,8 +17,10 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import static de.raidcraft.rccity.Messages.Colors.*;
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.format.NamedTextColor.*;
+import static net.kyori.adventure.text.format.TextDecoration.UNDERLINED;
 
 public final class Messages {
 
@@ -87,5 +92,37 @@ public final class Messages {
     public static void sendRemote(RemoteConsoleCommandSender sender, Component message) {
 
         sender.sendMessage(PlainComponentSerializer.plain().serialize(message));
+    }
+
+    public static Component cityCreated(String name) {
+
+        return text("Die Stadt ", SUCCESS)
+                .append(text(name, ACCENT))
+                .append(text(" wurde erfolgreich erstellt.", SUCCESS));
+    }
+
+    public static Component increasedProgress(CityProgress progress, Resident resident, float increase) {
+
+        return text("Der Fortschritt der Stadt ", TEXT)
+                .append(city(progress.city()))
+                .append(text(" wurde um ", TEXT))
+                .append(text(increase, HIGHLIGHT))
+                .append(text(" auf ", TEXT))
+                .append(text(progress.value(), DARK_HIGHLIGHT))
+                .append(text("/", ACCENT))
+                .append(text(progress.requiredValue(), HIGHLIGHT))
+                .append(text(" von ", TEXT))
+                .append(resident(resident))
+                .append(text(" erhöht.", SUCCESS));
+    }
+
+    public static Component city(City city) {
+
+        return text(city.name(), ACCENT, UNDERLINED);
+    }
+
+    public static Component resident(Resident resident) {
+
+        return text(resident.name(), ACCENT, UNDERLINED);
     }
 }

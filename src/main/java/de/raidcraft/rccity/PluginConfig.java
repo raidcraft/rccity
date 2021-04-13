@@ -24,9 +24,9 @@ public class PluginConfig extends BukkitYamlConfiguration {
     @Setter
     public static class DatabaseConfig {
 
-        private String username = "sa";
-        private String password = "sa";
-        private String driver = "h2";
-        private String url = "jdbc:h2:~/rccity.db";
+        private String username = "${CFG_DB_USER}";
+        private String password = "${CFG_DB_PASSWORD}";
+        private String driver = "${CFG_DB_DRIVER}";
+        private String url = "${CFG_DB_URL}";
     }
 }

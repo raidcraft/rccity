@@ -3,6 +3,10 @@ package de.raidcraft.rccity;
 import co.aikar.commands.PaperCommandManager;
 import de.raidcraft.rccity.commands.AdminCommands;
 import de.raidcraft.rccity.commands.PlayerCommands;
+import de.raidcraft.rccity.entities.City;
+import de.raidcraft.rccity.entities.CityProgress;
+import de.raidcraft.rccity.entities.Contribution;
+import de.raidcraft.rccity.entities.Resident;
 import io.ebean.Database;
 import kr.entree.spigradle.annotations.PluginMain;
 import lombok.AccessLevel;
@@ -83,7 +87,10 @@ public class RCCity extends JavaPlugin {
 
         this.database = new EbeanWrapper(Config.builder(this)
                 .entities(
-                        // TODO: add your database entities here
+                        City.class,
+                        CityProgress.class,
+                        Contribution.class,
+                        Resident.class
                 )
                 .build()).connect();
     }
