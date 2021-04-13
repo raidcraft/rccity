@@ -1,4 +1,4 @@
-package de.raidcraft.template;
+package de.raidcraft.rccity;
 
 import co.aikar.commands.CommandIssuer;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -41,8 +41,8 @@ public final class Messages {
     }
     public static void send(UUID playerId, Component message) {
 
-        if (PluginTemplate.isTesting()) return;
-        BukkitAudiences.create(PluginTemplate.instance())
+        if (RCCity.isTesting()) return;
+        BukkitAudiences.create(RCCity.instance())
                 .player(playerId)
                 .sendMessage(message);
     }
@@ -69,8 +69,8 @@ public final class Messages {
 
     public static void send(UUID target, Title title) {
 
-        if (PluginTemplate.isTesting()) return;
-        BukkitAudiences.create(PluginTemplate.instance())
+        if (RCCity.isTesting()) return;
+        BukkitAudiences.create(RCCity.instance())
                 .player(target)
                 .showTitle(title);
     }
