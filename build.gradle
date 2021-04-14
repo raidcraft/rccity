@@ -62,17 +62,13 @@ dependencies {
     compileOnly spigot(mcVersion)
 
     implementation 'net.silthus:ebean-wrapper:2.8.1'
-    implementation 'net.silthus.configlib:configlib-bukkit:2.6.0'
     implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
 
     implementation 'net.kyori:adventure-api:4.5.0'
     implementation 'net.kyori:adventure-text-minimessage:4.0.0-SNAPSHOT'
     implementation 'net.kyori:adventure-platform-bukkit:4.0.0-SNAPSHOT'
     implementation group: 'net.kyori', name: 'adventure-text-feature-pagination', version: '4.0.0-SNAPSHOT'
     implementation group: 'net.kyori', name: 'adventure-text-serializer-plain', version: '4.5.0'
-
-    implementation group: 'io.art-framework.core', name: 'api', version: '4.5.1'
 
     testImplementation 'io.ebean:ebean-test:12.6.0'
 
@@ -93,12 +89,10 @@ shadowJar {
     classifier = ''
     dependencies {
         include(dependency('co.aikar:acf-paper:'))
-        include(dependency('net.silthus.configlib:configlib-bukkit:'))
         include(dependency('net.kyori::'))
     }
     relocate 'co.aikar.commands', "shadow.${pluginName}.acf"
     relocate 'co.aikar.locales', "shadow.${pluginName}.locales"
-    relocate 'de.exlll.configlib', "shadow.${pluginName}.configlib"
     relocate 'net.kyori', "shadow.${pluginName}.text"
 }
 

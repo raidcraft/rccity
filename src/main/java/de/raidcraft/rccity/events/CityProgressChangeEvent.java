@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The event is fired when a resident increases the progress of a city.
  * <p>The progress can be increased by calling {@link CityProgress#increase(Resident, float)}.
- * <p>The {@link CityProgressIncreasedEvent} is fired after this event if it is not cancelled.
+ * <p>The {@link CityProgressChangedEvent} is fired after this event if it is not cancelled.
  */
-public class CityProgressIncreaseEvent extends RCCityEvent implements Cancellable {
+public class CityProgressChangeEvent extends RCCityEvent implements Cancellable {
 
     @Getter
     private static final HandlerList handlerList = new HandlerList();
@@ -24,17 +24,20 @@ public class CityProgressIncreaseEvent extends RCCityEvent implements Cancellabl
     @Getter
     private final Resident resident;
     @Getter
+    private final float oldValue;
+    @Getter
     @Setter
-    private float increase;
+    private float value;
 
     @Getter
     @Setter
     private boolean cancelled;
 
-    public CityProgressIncreaseEvent(CityProgress progress, Resident resident, float value) {
+    public CityProgressChangeEvent(CityProgress progress, Resident resident, float oldValue, float newValue) {
         this.progress = progress;
         this.resident = resident;
-        this.increase = value;
+        this.oldValue = oldValue;
+        this.value = newValue;
     }
 
     public City getCity() {

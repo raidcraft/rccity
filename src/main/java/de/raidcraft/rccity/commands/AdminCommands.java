@@ -35,7 +35,7 @@ public class AdminCommands extends BaseCommand {
 
         Messages.send(getCurrentCommandIssuer(), cityCreated(name));
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> new City().name(name).save());
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> City.create(name));
     }
 
     @CommandPermission(Constants.Permissions.ADMIN_PROGRESS)

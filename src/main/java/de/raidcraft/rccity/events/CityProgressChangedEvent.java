@@ -9,9 +9,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * This event is fired after the progress of a city has been increased by a resident.
- * <p>Use the {@link CityProgressIncreaseEvent} to influence the outcome of the increase.
+ * <p>Use the {@link CityProgressChangeEvent} to influence the outcome of the increase.
  */
-public class CityProgressIncreasedEvent extends RCCityEvent {
+public class CityProgressChangedEvent extends RCCityEvent {
 
     @Getter
     private static final HandlerList handlerList = new HandlerList();
@@ -21,12 +21,15 @@ public class CityProgressIncreasedEvent extends RCCityEvent {
     @Getter
     private final Resident resident;
     @Getter
-    private final float increase;
+    private final float oldValue;
+    @Getter
+    private final float value;
 
-    public CityProgressIncreasedEvent(CityProgress progress, Resident resident, float value) {
+    public CityProgressChangedEvent(CityProgress progress, Resident resident, float oldValue, float newValue) {
         this.progress = progress;
         this.resident = resident;
-        this.increase = value;
+        this.oldValue = oldValue;
+        this.value = newValue;
     }
 
     public City getCity() {
