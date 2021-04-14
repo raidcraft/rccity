@@ -1,3 +1,5 @@
+# set to true to print out additional debug information in the logs
+debug: false
 database:
   username: sa
   password: sa

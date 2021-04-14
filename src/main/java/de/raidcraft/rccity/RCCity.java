@@ -3,6 +3,7 @@ package de.raidcraft.rccity;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.google.common.base.Strings;
+import de.raidcraft.rccity.adapters.RCCitiesAdapter;
 import de.raidcraft.rccity.commands.AdminCommands;
 import de.raidcraft.rccity.commands.PlayerCommands;
 import de.raidcraft.rccity.entities.City;
@@ -23,17 +24,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @PluginMain
+@Accessors(fluent = true)
 public class RCCity extends JavaPlugin {
 
     @Getter
-    @Accessors(fluent = true)
     private static RCCity instance;
+
+    @Getter
+    private PluginConfig config;
 
     private Database database;
 
@@ -41,6 +46,8 @@ public class RCCity extends JavaPlugin {
 
     @Getter
     private static boolean testing = false;
+
+    private final List<Adapter> adapters = new ArrayList<>();
 
     public RCCity() {
         instance = this;
@@ -60,17 +67,37 @@ public class RCCity extends JavaPlugin {
         setupDatabase();
         setupListener();
         setupCommands();
+
+        loadAdapters();
     }
 
     public void reload() {
 
         loadConfig();
+
+    }
+
+    public void register(Adapter adapter) {
+
+        try {
+            adapter.register(this);
+            adapters.add(adapter);
+        } catch (Exception e) {
+            getLogger().warning("failed to register adapter " + adapter.getClass().getCanonicalName() + ": " + e.getMessage());
+            if (config().debug()) e.printStackTrace();
+        }
+    }
+
+    private void loadAdapters() {
+
+        register(new RCCitiesAdapter());
     }
 
     private void loadConfig() {
 
         getDataFolder().mkdirs();
         saveDefaultConfig();
+        this.config = new PluginConfig(getConfig());
     }
 
     private void setupListener() {
